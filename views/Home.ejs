@@ -1,0 +1,196 @@
+<%-include("./Navbar")-%>
+<body>
+    <div class="flex justify-start text-5xl mt-20 m-10 font-thin">
+        Your Own DropBox
+    </div>
+    <div class="flex justify-start ml-10">
+        <div class="mb-3 w-96">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label
+                for="formFileLg"
+                class="mb-2 inline-block text-3xl text-neutral-900 dark:text-neutral-500 font-thin">Drop Your File Here </label>
+                <input
+                class="bg-slate-100 mt-2 font-thin relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300  bg-clip-padding px-3 py-1.5 text-xl text-slate-800 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-500 dark:focus:bg-transparent"
+                id="formFileLg"
+                type="file" 
+                name="file" multiple required/>
+                <button class="mt-2 bg-slate-100 px-4 py-3 rounded-md font-thin text-2xl text-">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div  class="flex justify-start text-5xl mt-20 m-10 font-thin" >Your Uploaded Files</div>
+    <div id="loading"></div>
+    <div class="m-10 border-solid border-2 border-gray-100 w-100%">
+        <div class="flex flex-wrap gap-2 m-10" >
+        <%  f.forEach(function(file){  %> 
+                <div class="bg-gray-100 rounded flex p-4 h-full items-center" id="okk">
+                    <button onclick="fun()"> 
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" class="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                            <path d="M22 4L12 14.01l-3-3"></path>
+                        </svg>
+                    </button>
+                    <a  href="http://localhost:1000/fileinfo/<%= file.filename %>" download>
+                        <span class="ohh title-font font-thin text-neutral-900 hover:text-red-400"><%=file.filename%></span>
+                    </a>
+                </div>
+        <%    })   %>
+        </div>
+    </div>
+    <!-- <div class="flex justify-center">
+        <div class="mb-3 w-96">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label
+            for="formFileLg"
+            class="mb-2 inline-block text-neutral-700 dark:text-neutral-200"
+            >Upload Images</label
+            >
+            <input
+            class="relative m-0 block w-full min-w-0 flex-auto cursor-pointer rounded border border-solid border-neutral-300 bg-white bg-clip-padding px-3 py-1.5 text-xl font-normal text-neutral-700 outline-none transition duration-300 ease-in-out file:-mx-3 file:-my-1.5 file:cursor-pointer file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-1.5 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:bg-white focus:text-neutral-700 focus:shadow-[0_0_0_1px] focus:shadow-primary focus:outline-none dark:bg-transparent dark:text-neutral-200 dark:focus:bg-transparent"
+            id="formFileLg"
+            type="file" 
+            name="image" multiple required/>
+            <button class="">
+                Submit
+            </button>
+
+            <a href="http://localhost:1000/fileinfo/02%20-%20Mujhko%20Barsaat%20Bana%20Lo(128kbps)%20[AllindiaMp3].mp3" download>Download My Resume</a>
+        </form>
+        </div>
+      </div> -->
+</body>
+<script>
+function fun(){
+        
+    let name=""
+    var doc = document.querySelectorAll('#okk')
+    console.log(doc)
+    
+    for (const item of doc){
+        item.addEventListener('click', function(){
+            name=item.getElementsByClassName("ohh")[0].outerText;
+            var postId = this.getElementsByClassName('ohh')[0].innerText;
+            // console.log(postId);
+            del(postId);
+            // console.log("Here I wi")
+            // console.log(name);
+            // console.log("dn")
+            // f(name);
+            // name=item.getElementsByClassName("ohh")[0].outerText;
+            // console.log(name);
+            // console.log("ohm");
+        })
+    }
+
+    // f(name)
+}
+
+// console.log("kemcho"); //
+// console.log(name)
+
+async function del(name){
+    console.log(name)
+    try{
+        const res =await fetch('/delete',{  
+            method:'POST',
+            body:JSON.stringify({name}),
+            headers:{'Content-Type':'application/json'},
+        });
+        const data = await res.json();
+        console.log(data);
+        if(data.errors){    
+            useriderror.textContent=data.errors.userid
+        }
+        if(data.user){
+                location.assign('/')
+        }   
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+
+
+    // function resolveAfter2Seconds() {
+        //   return new Promise((resolve) => {
+            //     console.log('j');
+//     var doc = document.querySelectorAll('#okk')
+//    for (const item of doc){
+//         item.addEventListener('click', function(){
+//             console.log(item.getElementsByClassName("ohh")[0].outerText);
+//             name=item.getElementsByClassName("ohh")[0].outerText;
+//             console.log(name);
+//             console.log("ohm");
+//         })
+//     } 
+//     resolve();
+//   });
+// }
+
+// async function f1() {
+//   await resolveAfter2Seconds();
+//   console.log("hi"); //
+// }
+
+
+
+// async function func(){
+//     console.log("HI")
+//     // let innera=document.getElementById("ohh");
+//     // console.log(innera)
+//     // innera="";  
+//     var doc = document.querySelectorAll('#okk')
+//     console.log(doc)
+//     var name=""
+//     console.log("start");
+//     // for (const item of doc){
+//     //     item.addEventListener('click', function(){
+//     //         console.log(item.getElementsByClassName("ohh")[0].outerText);
+//     //         name=item.getElementsByClassName("ohh")[0].outerText;
+//     //         console.log(name);
+//     //         console.log("ohm");
+//     //     })
+//     // }
+
+// var bar = new Promise((resolve, reject) => {
+
+// //     doc.forEach(function(doc){
+// //         doc.addEventListener('click', function(){
+// //             // console.log(doc.getElementsByClassName("ohh")[0].outerText);
+// //             name=doc.getElementsByClassName("ohh")[0].outerText;
+// //             console.log(name);
+// //             console.log("ohm");
+
+// //         }) 
+// //         if (index === array.length -1) resolve();
+// //     })
+
+//     doc.forEach((value,index,doc) =>{
+//         value.addEventListener('click', function(){
+//             // console.log(doc.getElementsByClassName("ohh")[0].outerText);
+//             name=value.getElementsByClassName("ohh")[0].outerText;
+//             console.log(name);
+//             console.log("ohm");
+
+//         }) ;
+//         if (index === doc.length -1) resolve();
+//     });
+// }); 
+
+// //     // foo.forEach((value, index, array) => {
+// //     //     console.log(value);
+// //     //     if (index === array.length -1) resolve();
+// //     // });
+// // });
+
+// bar.then(() => {
+//     console.log('All done!'); 
+//     console.log("ohh");
+//     console.log(name);
+// });
+
+
+
+// }
+</script>
+</html>
