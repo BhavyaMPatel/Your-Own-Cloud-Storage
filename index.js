@@ -64,21 +64,11 @@ const upload = multer({
 
 
 
-// const GridFs=Grid(mongoose.connections[0].db,mongoose.mongo)
-
-
-// GridFs.collections('newBucket').remove({_id:mongoose.Types.ObjectId()},()=>{
-//   console.log("Delete old bucket");
-// })
-
-//to parse json content
-
 
 app.get('/', async (req, res) => {
     let f=[];
     await bucket.find({}).toArray((err,files)=>{
-    // console.log(files);
-    // console.log(files);
+   
     f=files;
     return res.render("Home",{f,f});
   });
@@ -111,17 +101,11 @@ app.get("/fileinfo/:filename", async(req, res) => {
         // console.log(files);
       });
 
-      // const post = await storage.findOne({ filename: req.params.filename });
-      // console.log();
-      // res.send("Downloading...");
+      
 });
 
 app.post("/upload", upload.any(), (req, res) => {
-  // const {file} = req;
-  // const stream = fs.createReadStream(file.path); //creates stream
-  // storage.fromStream(stream, req, file)
-  //   .then(() => res.send('File uploaded')) //saves data as binary to cloud db
-  //   .catch(() => res.status(500).send('error'));
+
   res.status(200).redirect("/ok");
 });
 
@@ -130,37 +114,13 @@ app.post('/delete',async function(req,res){
   console.log(req.body.name)
   
   await bucket.find({filename:req.body.name}).toArray((err,files)=>{
-    // return res.render("Home",{files,files});
-    // console.log();
+    
     bucket.delete(files[0]._id);
-    // console.log(files);
+  
   });
   console.log("hi");
   res.status(201).json({user:"ok"})
-  // const file = bucket
-  // .find({
-  //   filename: req.body.name
-  // })
-  // .toArray((err, files) => {
-  //   if (!files || files.length === 0) {
-  //     return res.status(404)
-  //       .json({
-  //         err: "no files exist"
-  //       });
-  //       // alert("Error In Database")
-  //   }
-  // });
   
-  // let a=""
-  // await bucket.findOne({filename:req.body.name}).toArray((err,files)=>{
-  //   // return res.render("Home",{files,files});
-  //   console.log(files)
-  //   // console.log(a)
-  //   // console.log(files);
-  // });
-
- 
-
  
     
 })
@@ -171,7 +131,7 @@ app.get('/ok',(req,res)=>{
   res.send("HI");
 })
 
-const PORT = 1000;
+const PORT = process.env.PORT | 1000;
 
 app.listen(PORT, () => {
     console.log(`Application live on localhost:{process.env.PORT}`);
