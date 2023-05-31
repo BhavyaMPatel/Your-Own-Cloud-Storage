@@ -17,7 +17,7 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 mongoose.set('strictQuery', false);
 
-const mongoURI=`mongodb+srv://BhavyaMPatel:PatelBhavyaM@bhavya.k6nfals.mongodb.net/`
+const mongoURI=`mongodb+srv://{UserName}:{Password}@bhavya.k6nfals.mongodb.net/`
 
 try {
   mongoose.connect(mongoURI, {
