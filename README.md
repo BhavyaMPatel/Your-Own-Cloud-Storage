@@ -5,7 +5,7 @@ Your Own Cloud Storage
 Your Own Cloud Storage Where ClienT Can Store Their All Types Of Files In Cloud Using Web Application And
 Also Later Can Download Files From Cloud And Able To Delete It From Cloud 
 ```
-![Screenshot 2023-05-31 224847](https://github.com/BhavyaMPatel/MongoDb-File-Uplaod/assets/100468926/a3cd4131-f2b9-4466-a987-aab683ff9c73)
+![ReadMe Image](https://github.com/BhavyaMPatel/Your-Own-Cloud-Storage/blob/master/uploads/files/Readme.png)
 
 ``` 
 To Contribute On Project
